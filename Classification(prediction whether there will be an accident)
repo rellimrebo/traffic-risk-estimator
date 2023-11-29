@@ -1,0 +1,134 @@
+import pandas as pd
+import csv
+from sklearn.linear_model import LogisticRegression
+import random
+import numpy as np
+
+file_name = 'cleaned_acc_data.csv'
+data = []
+with open(file_name) as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        data.append(row)
+print(data[0])
+np.random.shuffle(data)
+
+dataset = []
+veh_set = set()
+address_set = set()
+time_set = set()
+address_acc = {}
+veh_model_acc = {}
+time_acc = {}
+for d in data:
+    veh = d['veh_make']
+    address = d['address_road_primary']
+    time = d['time'][:2]
+    veh_set.add(veh)
+    address_set.add(address)
+    time_set.add(time)
+    dataset.append((veh, address, time))
+    if veh in veh_model_acc:
+        veh_model_acc[veh] += 1
+    else:
+        veh_model_acc[veh] = 1
+    if time in time_acc:
+        time_acc[time] += 1
+    else:
+        time_acc[time] = 1
+    if address in address_acc:
+        address_acc[address] += 1
+    else:
+        address_acc[address] = 1
+
+veh_model_acc = sorted(veh_model_acc.items(), key=lambda x: x[1], reverse=True)
+time_acc = sorted(time_acc.items())
+address_acc = sorted(address_acc.items(), key=lambda x: x[1], reverse=True)
+
+train_set = dataset[:100000]
+test_set = dataset[100000:]
+new_train_set = []
+new_test_set = []
+# print(len(train_set))
+# print(len(test_set))
+for d in train_set:
+    new_train_set.append(d)
+for d in test_set:
+    new_test_set.append(d)
+for index, (veh, address, time) in enumerate(train_set):
+    random.seed(index * 333)
+    new_veh = random.choice(list(veh_set))
+    new_address = random.choice(list(address_set))
+    new_time = random.choice(list(time_set))
+    new_train_set.append((new_veh, new_address, new_time))
+for index, (veh, address, time) in enumerate(test_set):
+    random.seed(index * 3333)
+    new_veh = random.choice(list(veh_set))
+    new_address = random.choice(list(address_set))
+    new_time = random.choice(list(time_set))
+    new_test_set.append((new_veh, new_address, new_time))
+# print(len(new_train_set))
+# print(len(new_test_set))
+# print(veh_model_acc)
+for d in data:
+    veh = d['veh_make']
+    time = d['time'][:2]
+    address = d['address_road_primary']
+
+
+def feature(d, veh_count, address_count):
+    veh_one_hot = [0 for i in range(veh_count + 1)]
+    time_one_hot = [0 for i in range(24)]
+    address_one_hot = [0 for i in range(address_count + 1)]
+    veh = d[0]
+    address = d[1]
+    time = d[2]
+    for index, (veh_model, veh_count) in enumerate(veh_model_acc):
+        if veh == veh_model:
+            if veh_count > 40:
+                veh_one_hot[index] = 1
+            else:
+                veh_one_hot[-1] = 1
+    for index, (address_name, address_count) in enumerate(address_acc):
+        if address == address_name:
+            if address_count > 200:
+                address_one_hot[index] = 1
+            else:
+                address_one_hot[-1] = 1
+    time_one_hot[int(time)] = 1
+    return [1] + veh_one_hot + time_one_hot + address_one_hot
+
+
+def accuracy(y_real, y_pred):
+    count = 0
+    for i, j in zip(y_real, y_pred):
+        if i == j:
+            count += 1
+    return count / len(y_real)
+
+
+veh_count = 0
+address_count = 0
+for veh, count in veh_model_acc:
+    if count > 40:
+        veh_count += 1
+for address, count in address_acc:
+    if count > 200:
+        address_count += 1
+print(veh_count)
+print(address_count)
+
+x_train = [feature(d, veh_count, address_count) for d in new_train_set]
+y_train = [1 for i in range(len(train_set))]
+x_test = [feature(d, veh_count, address_count) for d in new_test_set]
+y_test = [1 for i in range(len(test_set))]
+for i in range(len(train_set)):
+    y_train.append(0)
+for i in range(len(test_set)):
+    y_test.append(0)
+
+model = LogisticRegression(C=10, fit_intercept=False, class_weight='balanced', max_iter=1000)
+model.fit(x_train, y_train)
+prediction = model.predict(x_test)
+print(prediction)
+print(accuracy(prediction, y_test))
