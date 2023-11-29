@@ -1,0 +1,107 @@
+import pandas as pd
+import csv
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Ridge
+import numpy as np
+
+file_name = 'cleaned_acc_data.csv'
+dataset = []
+with open(file_name) as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        dataset.append(row)
+np.random.shuffle(dataset)
+data_train = dataset[:100000]
+data_test = dataset[100000:]
+print(data_train[0])
+
+address_acc = {}
+veh_model_acc = {}
+time_acc = {}
+for d in dataset:
+    veh = d['veh_make']
+    time = d['time'][:2]
+    address = d['address_road_primary']
+    if veh in veh_model_acc:
+        veh_model_acc[veh] += 1
+    else:
+        veh_model_acc[veh] = 1
+    if time in time_acc:
+        time_acc[time] += 1
+    else:
+        time_acc[time] = 1
+    if address in address_acc:
+        address_acc[address] += 1
+    else:
+        address_acc[address] = 1
+
+
+veh_model_acc = sorted(veh_model_acc.items(), key=lambda x: x[1], reverse=True)
+time_acc = sorted(time_acc.items())
+address_acc = sorted(address_acc.items(), key=lambda x: x[1], reverse=True)
+print(veh_model_acc)
+print(time_acc)
+print(address_acc)
+
+count = 0
+for veh, num in veh_model_acc:
+    if num >= 20:
+        count += 1
+
+
+def MSE(y_real, y_pred):
+    sum = 0
+    for i, j in zip(y_real, y_pred):
+        sum += (i - j) ** 2
+    return sum / len(y_real)
+
+
+
+
+def feature(d, veh_count, address_count):
+    veh_one_hot = [0 for i in range(veh_count + 1)]
+    time_one_hot = [0 for i in range(24)]
+    address_one_hot = [0 for i in range(address_count + 1)]
+    veh = d['veh_make']
+    time = d['time'][:2]
+    address = d['address_road_primary']
+    for index, (veh_model, veh_count) in enumerate(veh_model_acc):
+        if veh == veh_model:
+            if veh_count > 40:
+                veh_one_hot[index] = 1
+            else:
+                veh_one_hot[-1] = 1
+    for index, (address_name, address_count) in enumerate(address_acc):
+        if address == address_name:
+            if address_count > 200:
+                address_one_hot[index] = 1
+            else:
+                address_one_hot[-1] = 1
+    time_one_hot[int(time)] = 1
+    return [1] + veh_one_hot + time_one_hot + address_one_hot
+
+veh_count = 0
+address_count = 0
+for veh, count in veh_model_acc:
+    if count > 40:
+        veh_count += 1
+for address, count in address_acc:
+    if count > 200:
+        address_count += 1
+print(veh_count)
+print(address_count)
+
+x_train = [feature(d, veh_count, address_count) for d in data_train]
+y_train = [int(d['injured']) for d in data_train]
+x_test = [feature(d, veh_count, address_count) for d in data_test]
+y_test = [int(d['injured']) for d in data_test]
+model = Ridge(alpha=10, fit_intercept=False)
+model.fit(x_train, y_train)
+prediction = model.predict(x_test)
+
+# print(y_test[:20])
+# print(prediction[:20])
+# print(max(prediction))
+# print(min(prediction))
+print(MSE(y_test, prediction))
+
