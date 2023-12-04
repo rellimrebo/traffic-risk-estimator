@@ -1,10 +1,19 @@
-import pandas as pd
+'''
+This code using a classification method which called Logistic Regression to make predictions on whether there will
+be an accident.
+For example, give the model of the vehicle, the name of the street and the time, this model will give an output 1 or 0,
+where 1 means there will be an accident and 0 means the driver is safe.
+The final accuracy of this model is about 96%.
+'''
+
+
 import csv
 from sklearn.linear_model import LogisticRegression
 import random
 import numpy as np
 
-file_name = 'cleaned_acc_data.csv'
+# load the dataset and shuffle it
+file_name = 'collision_reports_processed.csv'
 data = []
 with open(file_name) as f:
     reader = csv.DictReader(f)
@@ -13,6 +22,7 @@ with open(file_name) as f:
 print(data[0])
 np.random.shuffle(data)
 
+# create veh-model set, address set and time set
 dataset = []
 veh_set = set()
 address_set = set()
@@ -22,12 +32,13 @@ veh_model_acc = {}
 time_acc = {}
 for d in data:
     veh = d['veh_make']
-    address = d['address_road_primary']
-    time = d['time'][:2]
+    address = d['street_name_primary']
+    time = d['hour_minute'][:2]
     veh_set.add(veh)
     address_set.add(address)
     time_set.add(time)
     dataset.append((veh, address, time))
+    # calculate the number of accident for each time, address, vehicle model
     if veh in veh_model_acc:
         veh_model_acc[veh] += 1
     else:
@@ -41,41 +52,42 @@ for d in data:
     else:
         address_acc[address] = 1
 
+# sort them by value
 veh_model_acc = sorted(veh_model_acc.items(), key=lambda x: x[1], reverse=True)
 time_acc = sorted(time_acc.items())
 address_acc = sorted(address_acc.items(), key=lambda x: x[1], reverse=True)
 
-train_set = dataset[:100000]
-test_set = dataset[100000:]
+# split train_set and test_set by 3:1
+split_point = int(0.75 * len(dataset))
+train_set = dataset[:split_point]
+test_set = dataset[split_point:]
+
+# add negative sample to the original train_set and test_set
 new_train_set = []
 new_test_set = []
-# print(len(train_set))
-# print(len(test_set))
-for d in train_set:
-    new_train_set.append(d)
-for d in test_set:
-    new_test_set.append(d)
+for veh, address, time in train_set:
+    new_train_set.append((veh, address, time, 1))
+for veh, address, time in test_set:
+    new_test_set.append((veh, address, time, 1))
 for index, (veh, address, time) in enumerate(train_set):
-    random.seed(index * 333)
+    random.seed(index * 33)
     new_veh = random.choice(list(veh_set))
     new_address = random.choice(list(address_set))
     new_time = random.choice(list(time_set))
-    new_train_set.append((new_veh, new_address, new_time))
+    new_train_set.append((new_veh, new_address, new_time, 0))
 for index, (veh, address, time) in enumerate(test_set):
     random.seed(index * 3333)
     new_veh = random.choice(list(veh_set))
     new_address = random.choice(list(address_set))
     new_time = random.choice(list(time_set))
-    new_test_set.append((new_veh, new_address, new_time))
-# print(len(new_train_set))
-# print(len(new_test_set))
-# print(veh_model_acc)
-for d in data:
-    veh = d['veh_make']
-    time = d['time'][:2]
-    address = d['address_road_primary']
+    new_test_set.append((new_veh, new_address, new_time, 0))
+
+# shuffle the train_set and test_set
+np.random.shuffle(new_train_set)
+np.random.shuffle(new_test_set)
 
 
+# return the feature for each data, which means return one-hot-encoding for veh-model, address and time
 def feature(d, veh_count, address_count):
     veh_one_hot = [0 for i in range(veh_count + 1)]
     time_one_hot = [0 for i in range(24)]
@@ -99,6 +111,7 @@ def feature(d, veh_count, address_count):
     return [1] + veh_one_hot + time_one_hot + address_one_hot
 
 
+# return the accuracy of the model
 def accuracy(y_real, y_pred):
     count = 0
     for i, j in zip(y_real, y_pred):
@@ -107,6 +120,7 @@ def accuracy(y_real, y_pred):
     return count / len(y_real)
 
 
+# determine how much one-hot-encoding space we should use
 veh_count = 0
 address_count = 0
 for veh, count in veh_model_acc:
@@ -115,20 +129,17 @@ for veh, count in veh_model_acc:
 for address, count in address_acc:
     if count > 200:
         address_count += 1
-print(veh_count)
-print(address_count)
 
+# create x_train, x_test, y_train and y_test
 x_train = [feature(d, veh_count, address_count) for d in new_train_set]
-y_train = [1 for i in range(len(train_set))]
+y_train = [d[3] for d in new_train_set]
 x_test = [feature(d, veh_count, address_count) for d in new_test_set]
-y_test = [1 for i in range(len(test_set))]
-for i in range(len(train_set)):
-    y_train.append(0)
-for i in range(len(test_set)):
-    y_test.append(0)
+y_test = [d[3] for d in new_test_set]
 
-model = LogisticRegression(C=10, fit_intercept=False, class_weight='balanced', max_iter=1000)
+# create logistic regression (classification) model, fit the model and make predictions
+model = LogisticRegression(C=10, fit_intercept=False, max_iter=1000)
 model.fit(x_train, y_train)
 prediction = model.predict(x_test)
-print(prediction)
+
+# print the accuracy of the model
 print(accuracy(prediction, y_test))
