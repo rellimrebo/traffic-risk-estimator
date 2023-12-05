@@ -43,21 +43,15 @@ def convert_street_suffix(x):
     x = ' '.join(x)
     return x
 
-collision_reports = pd.read_csv('pd_collisions_details_datasd.csv',dtype={'report_id': str})
+collision_reports = pd.read_csv('pd_collisions_details_datasd.csv')
 traffic_counts = pd.read_csv('traffic_counts_datasd.csv')
 
 # Change dates to month-year format
-
-collision_reports['year'] = pd.to_datetime(collision_reports['date_time']).dt.year
-collision_reports['month'] = pd.to_datetime(collision_reports['date_time']).dt.month
-collision_reports['day'] = pd.to_datetime(collision_reports['date_time']).dt.day
-collision_reports['hour_minute'] = pd.to_datetime(collision_reports['date_time']).dt.strftime('%H:%M')
-
 collision_reports['date_time'] = pd.to_datetime(collision_reports['date_time']).dt.to_period('m')
 traffic_counts['date_count'] = pd.to_datetime(traffic_counts['date_count']).dt.to_period('m')
 
 # Get rid of extraneous data
-collision_reports = collision_reports.loc[:, ['date_time', 'year', 'month', 'day', 'hour_minute', 'person_role', 'veh_make', 'address_road_primary', 'address_sfx_primary', 'address_name_intersecting', 'address_sfx_intersecting', 'violation_section', 'violation_type', 'charge_desc', 'injured', 'killed']]
+collision_reports = collision_reports.loc[:, ['date_time', 'address_road_primary', 'address_sfx_primary', 'address_name_intersecting', 'address_sfx_intersecting', 'veh_type', 'injured', 'killed']]
 traffic_counts = traffic_counts.loc[:, ['date_count', 'street_name', 'total_count']]
 
 # Abbrieviate all street suffixes // items without entry do not have abbrieviation
@@ -81,8 +75,8 @@ collision_reports = collision_reports[collision_reports['street_name_primary'].i
 traffic_counts = traffic_counts[traffic_counts['street_name'].isin(collision_reports['street_name_primary'])]
 
 # Save to csv
-collision_reports.to_csv('collision_reports_processed.csv', index=False)
-traffic_counts.to_csv('traffic_counts_processed.csv', index=False)
+collision_reports.to_csv('collision_reports_processed.csv')
+traffic_counts.to_csv('traffic_counts_processed.csv')
 
 # Questions
 
