@@ -6,7 +6,6 @@ where 1 means there will be an accident and 0 means the driver is safe.
 The final accuracy of this model is about 96%.
 '''
 
-
 import csv
 from sklearn.linear_model import LogisticRegression
 import random
@@ -142,4 +141,19 @@ model.fit(x_train, y_train)
 prediction = model.predict(x_test)
 
 # print the accuracy of the model
+print('the accuracy of this model is:')
 print(accuracy(prediction, y_test))
+# print(prediction[:20])
+# print(y_test[:20])
+
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 50, 50)
+plt.plot(x, prediction[:50], label='predictions', color='red')
+plt.plot(x, y_test[:50], label='real value', color='blue')
+
+plt.title('Classification of whether there will be a collision')
+plt.xlabel('samples')
+plt.ylabel('whether there will be a collision')
+plt.legend()
+plt.show()
