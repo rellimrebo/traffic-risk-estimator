@@ -11,8 +11,8 @@ Regression.py: A regression model using Linear Regression to predict the number 
 # How to run this scripts
 
 # Third Party Modules
-csv
-Ridge
+csv  
+Ridge  
 numpy
 LogisticRegression
 random
