@@ -8,3 +8,12 @@ Classification.py: A classification model using Logistic Regression to predict w
 
 Regression.py: A regression model using Linear Regression to predict the number of people who will be injured by the collision. 
 
+# How to run this scripts
+
+# Third Party Modules
+csv
+Ridge
+numpy
+LogisticRegression
+random
+matplotlib.pyplot
