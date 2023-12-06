@@ -1,4 +1,4 @@
-# traffic-risk-estimator
+# Traffic-Risk-Estimator
 Visualization of San Diego traffic risk based on historical collision data
 
 Team members: Andrew Obermiller, Haoran Li, Joey Liu, Tongqing Shi, Zachary Zheng
@@ -8,6 +8,7 @@ Classification.py: A classification model using Logistic Regression to predict w
 Regression.py: A regression model using Linear Regression to predict the number of people who will be injured by the collision. 
 
 # How to run this scripts
+
 
 # Third Party Modules
 csv  
