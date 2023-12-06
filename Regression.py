@@ -6,7 +6,6 @@ where the number means how much people will be injured by this accident.
 The final MSE of this model is about 0.85-1.
 '''
 
-
 import csv
 from sklearn.linear_model import Ridge
 import numpy as np
@@ -80,6 +79,7 @@ def feature(d, veh_count, address_count):
     time_one_hot[int(time)] = 1
     return [1] + veh_one_hot + time_one_hot + address_one_hot
 
+
 # determine how much one-hot-encoding space we should use
 veh_count = 0
 address_count = 0
@@ -102,5 +102,17 @@ model.fit(x_train, y_train)
 prediction = model.predict(x_test)
 
 # print the MSE of the model
+print('the MSE of this model is:')
 print(MSE(y_test, prediction))
 
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 100, 100)
+plt.plot(x, prediction[:100], label='prediction', color='red')
+plt.plot(x, y_test[:100], label='true value', color='blue')
+
+plt.title('Regression of how much people will be injured in the collision')
+plt.xlabel('samples')
+plt.ylabel('number of injured')
+plt.legend()
+plt.show()
