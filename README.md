@@ -27,6 +27,12 @@ cleaned_traffic_data.csv: cleaned pd_collisions_details_datasd.csv file that wil
 
 collision_reports_processed.csv: cleaned traffic_account_datasd.csv file that will be used in predictions.  
 
+data_preprocessing.py: processing for the original dataset.  
+
+data_statistic.ipynb: some data analysis for the dataset.  
+
+person_veh_type_dictionary_datasd.csv: dictionary for person type and vehicle type.  
+
 # How to run these scripts
 ## For data analysis:
 
