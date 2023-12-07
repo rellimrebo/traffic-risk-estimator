@@ -3,7 +3,6 @@ Visualization of San Diego traffic risk based on historical collision data
 
 Team members: Andrew Obermiller, Haoran Li, Joey Liu, Tongqing Shi, Zachary Zheng
 # Files
-
 veh_type_graphs.ipynb: Visualization of vehicle types involved in collisions and normalized casualty rates.
 
 visualization.ipynb: Visualization of time and street information in collisions.
@@ -21,7 +20,15 @@ data_preprocessing.py:
 1. Download pd_collisions_details_datasd.csv and traffic_counts_datasd.csv
 2. Ensure the script and datasets are the in the same directory
 3. Ensure all third party modules are installed
-4. Run 
+4. Run
+
+data_statistical.ipynb:
+1. Download collision_reports_processed.csv and traffic_counts_processed.csv
+2. Ensure the script and datasets are the in the same directory or change the file path in the read_csv function
+3. Ensure all third party modules are installed
+4. More detailed description step by step can be found in the ipynb file, hope you can find something interesting results in this file.
+5. Run
+
 
 veh_type_graphs.ipynb:
 1. Download pd_collisions_details_datasd.csv
