@@ -5,13 +5,27 @@ Team members: Andrew Obermiller, Haoran Li, Joey Liu, Tongqing Shi, Zachary Zhen
 # Files
 veh_type_graphs.ipynb: Visualization of vehicle types involved in collisions and normalized casualty rates.
 
-visualization.ipynb: Visualization of date/time and street information in collisions.
+visualization.ipynb: Visualization of time and street information in collisions.
 
 data_statistical.ipynb: Apply some Probability and Statistical Methods on the processed traffic and collisions data.
 
 Classification.py: A classification model using Logistic Regression to predict whether there will be a collision.  
 
-Regression.py: A regression model using Linear Regression to predict the number of people who will be injured by the collision. 
+Regression.py: A regression model using Linear Regression to predict the number of people who will be injured by the collision.  
+
+traffic_counts_datasd.csv: original dataset including traffic count data.  
+
+traffic_count_dictionary_datasd.csv: the dictionary for the traffic_counts file.  
+
+pd_collisions_details_datasd.csv: original dataset including the collisions.  
+
+pd_collisions_details_dictionary_datasd.csv: the dictionary for the collisions_details file.  
+
+cleaned_acc_data.csv: cleaned traffic_account_datasd.csv file that will be used in data analysis.  
+
+cleaned_traffic_data.csv: cleaned pd_collisions_details_datasd.csv file that will be used in data analysis.  
+
+collision_reports_processed.csv: cleaned traffic_account_datasd.csv file that will be used in predictions.  
 
 # How to run these scripts
 ## For data analysis:
