@@ -5,9 +5,13 @@ Team members: Andrew Obermiller, Haoran Li, Joey Liu, Tongqing Shi, Zachary Zhen
 # Files
 
 veh_type_graphs.ipynb: Visualization of vehicle types involved in collisions and normalized casualty rates.
+
 visualization.ipynb: Visualization of time and street information in collisions.
+
 data_statistical.ipynb: Apply some Probability and Statistical Methods on the processed traffic and collisions data.
+
 Classification.py: A classification model using Logistic Regression to predict whether there will be a collision.  
+
 Regression.py: A regression model using Linear Regression to predict the number of people who will be injured by the collision. 
 
 # How to run these scripts
