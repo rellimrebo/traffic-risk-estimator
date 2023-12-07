@@ -5,7 +5,7 @@ Team members: Andrew Obermiller, Haoran Li, Joey Liu, Tongqing Shi, Zachary Zhen
 # Files
 veh_type_graphs.ipynb: Visualization of vehicle types involved in collisions and normalized casualty rates.
 
-visualization.ipynb: Visualization of time and street information in collisions.
+visualization.ipynb: Visualization of date/time and street information in collisions.
 
 data_statistical.ipynb: Apply some Probability and Statistical Methods on the processed traffic and collisions data.
 
