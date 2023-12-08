@@ -11,6 +11,9 @@ pd_collisions_details_datasd.csv: https://data.sandiego.gov/datasets/police-coll
 traffic_counts_datasd.csv: https://data.sandiego.gov/datasets/traffic-volumes/
 
 # Files
+
+ECE 143 Group 11 Project.pdf: Final presentation slides
+
 veh_type_graphs.ipynb: Visualization of vehicle types involved in collisions and normalized casualty rates.
 
 visualization.ipynb: Visualization of time and street information in collisions.
