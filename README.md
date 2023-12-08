@@ -14,8 +14,6 @@ traffic_counts_datasd.csv: https://data.sandiego.gov/datasets/traffic-volumes/
 
 ECE 143 Group 11 Project.pdf: Final presentation slides
 
-veh_type_graphs.ipynb: Visualization of vehicle types involved in collisions and normalized casualty rates.
-
 data_visualization.ipynb: Visualization of time and street information in collisions.
 
 Classification.py: A classification model using Logistic Regression to predict whether there will be a collision.  
@@ -30,8 +28,6 @@ collision_reports_processed.csv: cleaned traffic_account_datasd.csv file that wi
 
 data_preprocessing.py: processing for the original dataset.  
 
-data_statistic.ipynb: apply some Probability and Statistical Methods on the processed traffic and collisions data.
-
 # How to run these scripts
 ## For data analysis:
 
@@ -41,18 +37,12 @@ data_preprocessing.py:
 3. Ensure all third party modules are installed
 4. Run
 
-data_statistical.ipynb:
-1. Download collision_reports_processed.csv and traffic_counts_processed.csv
+data_visualization.ipynb:
+1. Download all raw data files
 2. Ensure the script and datasets are the in the same directory or change the file path in the read_csv function
 3. Ensure all third party modules are installed
 4. More detailed description step by step can be found in the ipynb file, hope you can find something interesting results in this file.
 5. Run
-
-veh_type_graphs.ipynb:
-1. Download pd_collisions_details_datasd.csv
-2. Ensure the script and dataset are the in the same directory
-3. Ensure all third party modules are installed
-4. Run
 
 ## For prediction:
 1. Download the collision_report_processed.csv
