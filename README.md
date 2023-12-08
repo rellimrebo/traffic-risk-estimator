@@ -3,7 +3,9 @@ Visualization of San Diego traffic risk based on historical collision data
 
 # Data sources:
 pd_beat_codes_list_datasd.csv: 	https://data.sandiego.gov/datasets/police-beats/
+
 pd_collisions_details_datasd.csv: https://data.sandiego.gov/datasets/police-collisions-details/
+
 traffic_counts_datasd.csv: https://data.sandiego.gov/datasets/traffic-volumes/
 
 Team members: Andrew Obermiller, Haoran Li, Joey Liu, Tongqing Shi, Zachary Zheng
