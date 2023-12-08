@@ -1,6 +1,8 @@
 # Traffic-Risk-Estimator
 Visualization of San Diego traffic risk based on historical collision data
 
+Team members: Andrew Obermiller, Haoran Li, Joey Liu, Tongqing Shi, Zachary Zheng
+
 # Data sources:
 pd_beat_codes_list_datasd.csv: 	https://data.sandiego.gov/datasets/police-beats/
 
@@ -8,7 +10,6 @@ pd_collisions_details_datasd.csv: https://data.sandiego.gov/datasets/police-coll
 
 traffic_counts_datasd.csv: https://data.sandiego.gov/datasets/traffic-volumes/
 
-Team members: Andrew Obermiller, Haoran Li, Joey Liu, Tongqing Shi, Zachary Zheng
 # Files
 veh_type_graphs.ipynb: Visualization of vehicle types involved in collisions and normalized casualty rates.
 
