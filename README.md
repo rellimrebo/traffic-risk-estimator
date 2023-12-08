@@ -18,8 +18,6 @@ veh_type_graphs.ipynb: Visualization of vehicle types involved in collisions and
 
 data_visualization.ipynb: Visualization of time and street information in collisions.
 
-data_statistical.py: Apply some Probability and Statistical Methods on the processed traffic and collisions data.
-
 Classification.py: A classification model using Logistic Regression to predict whether there will be a collision.  
 
 Regression.py: A regression model using Linear Regression to predict the number of people who will be injured by the collision.  
@@ -32,7 +30,7 @@ collision_reports_processed.csv: cleaned traffic_account_datasd.csv file that wi
 
 data_preprocessing.py: processing for the original dataset.  
 
-data_statistic.ipynb: some data analysis for the dataset.  
+data_statistic.ipynb: apply some Probability and Statistical Methods on the processed traffic and collisions data.
 
 # How to run these scripts
 ## For data analysis:
