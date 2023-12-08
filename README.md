@@ -19,19 +19,11 @@ traffic_count_dictionary_datasd.csv: the dictionary for the traffic_counts file.
 
 pd_collisions_details_datasd.csv: original dataset including the collisions.  
 
-pd_collisions_details_dictionary_datasd.csv: the dictionary for the collisions_details file.  
-
-cleaned_acc_data.csv: cleaned traffic_account_datasd.csv file that will be used in data analysis.  
-
-cleaned_traffic_data.csv: cleaned pd_collisions_details_datasd.csv file that will be used in data analysis.  
-
 collision_reports_processed.csv: cleaned traffic_account_datasd.csv file that will be used in predictions.  
 
 data_preprocessing.py: processing for the original dataset.  
 
 data_statistic.ipynb: some data analysis for the dataset.  
-
-person_veh_type_dictionary_datasd.csv: dictionary for person type and vehicle type.  
 
 # How to run these scripts
 ## For data analysis:
@@ -48,7 +40,6 @@ data_statistical.ipynb:
 3. Ensure all third party modules are installed
 4. More detailed description step by step can be found in the ipynb file, hope you can find something interesting results in this file.
 5. Run
-
 
 veh_type_graphs.ipynb:
 1. Download pd_collisions_details_datasd.csv
