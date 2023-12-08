@@ -23,8 +23,6 @@ Regression.py: A regression model using Linear Regression to predict the number 
 
 traffic_counts_datasd.csv: original dataset including traffic count data.  
 
-traffic_count_dictionary_datasd.csv: the dictionary for the traffic_counts file.  
-
 pd_collisions_details_datasd.csv: original dataset including the collisions.  
 
 collision_reports_processed.csv: cleaned traffic_account_datasd.csv file that will be used in predictions.  
