@@ -24,9 +24,13 @@ traffic_counts_datasd.csv: original dataset including traffic count data.
 
 pd_collisions_details_datasd.csv: original dataset including the collisions.  
 
+pd_beat_codes_list_datasd.csv: original dataset including the police beat codes
+
 collision_reports_processed.csv: cleaned traffic_account_datasd.csv file that will be used in predictions.  
 
 data_preprocessing.py: processing for the original dataset.  
+
+data_statistic.py: Apply probability and statistical methods to the collision data.
 
 # How to run these scripts
 ## For data analysis:
@@ -44,7 +48,7 @@ data_visualization.ipynb:
 4. More detailed description step by step can be found in the ipynb file, hope you can find something interesting results in this file.
 5. Run
 
-## For prediction:
+## For Regression.py and Classification.py:
 1. Download the collision_report_processed.csv
 2. Download the Classification.py and Regression.py
 3. Put them into the same dictionary.
